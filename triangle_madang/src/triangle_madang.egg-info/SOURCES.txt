@@ -1,0 +1,10 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+src/triangle_madang/__init__.py
+src/triangle_madang/triangle_madang.py
+src/triangle_madang.egg-info/PKG-INFO
+src/triangle_madang.egg-info/SOURCES.txt
+src/triangle_madang.egg-info/dependency_links.txt
+src/triangle_madang.egg-info/top_level.txt
