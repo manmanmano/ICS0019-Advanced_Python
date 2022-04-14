@@ -29,8 +29,8 @@ a_txt.focus()
 
 
 def clicked():
-    b_val = int(b_txt.get())
-    h_val = int(h_txt.get())
+    b_val = float(b_txt.get())
+    h_val = float(h_txt.get())
     area = triangle.calculate_area(b_val, h_val)
     a_txt["state"] = NORMAL
     a_txt.insert(0, str(area))
