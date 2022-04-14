@@ -37,6 +37,7 @@ def clicked():
     a_txt["state"] = DISABLED
     a_txt.configure({"disabledforeground": "black"})
 
+
 btn = tk.Button(window, text="Calculate", command=clicked)
 btn.grid(column=0,row=2)
 
