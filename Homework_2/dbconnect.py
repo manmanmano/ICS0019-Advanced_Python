@@ -39,7 +39,12 @@ def createRecords():
     for data in provider_data: 
         format_str = """INSERT INTO PROVIDER (ProviderName) VALUES ("{provider_name}");"""
         sql_command = format_str.format(provider_name=data)
-        cursor.execute(sql_command)
+        # find same records
+        cursor.execute("SELECT * FROM PROVIDER WHERE ProviderName = ?", (data, ))
+        nr_records = cursor.fetchall()
+        # if record is not found execute, else do nothing
+        if len(nr_records) == 0:
+            cursor.execute(sql_command)
 
     conn.commit()
     print("Data records inserted successfully!")
