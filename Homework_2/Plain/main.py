@@ -10,7 +10,7 @@ def opendb():
     print("Database opened successfully!")
 
 
-def create_tables():
+def createTables():
     """
     Create tables CANTEEN and PROVIDER in DINERS
     """
@@ -108,7 +108,7 @@ def closeconn():
 if __name__ == "__main__":
     print("\n")
     opendb()
-    create_tables()
+    createTables()
     createRecords()
     selectRecords()
     closeconn()
