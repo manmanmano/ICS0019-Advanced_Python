@@ -20,8 +20,8 @@ def create_tables():
             ProviderID INT NOT NULL,
             Name TEXT NOT NULL,
             Location VARCHAR(100) NOT NULL,
-            time_open TIME NOT NULL,
-            time_closed TIME NOT NULL,
+            time_open INT NOT NULL,
+            time_closed INT NOT NULL,
             FOREIGN KEY(ProviderID) REFERENCES PROVIDER(ID),
             UNIQUE(Name));''')
 
