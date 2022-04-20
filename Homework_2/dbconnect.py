@@ -72,7 +72,12 @@ def createRecords():
         ("2", "Natural Science building canteen", "Akadeemia tee 15, SCI building", "9:00", "16:00"),
         ("2", "ICT building canteen", "Raja 15/Mäepealse 1", "9:00", "16:00"),
         ("3", "Sports building canteen", "Männiliiva 7, S01 building", "11:00", "20:00")] 
-
+    for data in canteen_data: 
+        format_str = """INSERT INTO CANTEEN (ProviderID, Name, Location, time_open, time_closed) 
+        VALUES ("{provider_id}", "{name}", "{location}", "{time_open}", "{time_closed}");"""
+        sql_command = format_str.format(provider_id=data[0], name=data[1], location=data[2], time_open=data[3], time_closed=data[4])
+        if checkRecords(cursor, "CANTEEN", "Location",  data[2]):
+            cursor.execute(sql_command)
 
 
     conn.commit()
