@@ -55,7 +55,7 @@ def createRecords():
     canteen_data = [("1", "Economics- and social science building canteen", "Akadeemia tee 3, SOC-building", "830", "1830"), 
         ("1", "Library canteen", "Akadeemia tee 1/Ehitajate tee 7", "830", "1900"), 
         ("2", "Main building Deli cafe", "Ehitajate tee 5, U01 building", "900", "1630"),
-        ("2", "Main building Daily lunch restaurant", "Ehitajate tee 5, U01 building", "1400", "1630"),
+        ("2", "Main building Daily lunch restaurant", "Ehitajate tee 5, U01 building", "900", "1630"),
         ("1", "U06 building canteen", "U06 building", "900", "1600"),
         ("2", "Natural Science building canteen", "Akadeemia tee 15, SCI building", "900", "1600"),
         ("2", "ICT building canteen", "Raja 15/Mäepealse 1", "900", "1600"),
