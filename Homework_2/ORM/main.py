@@ -1,4 +1,3 @@
-from enum import unique
 from sqlalchemy import Column, Integer, String
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -32,17 +31,19 @@ Provider.canteens = relationship("Canteen", back_populates = "provider")
 
 Base.metadata.create_all(engine)
 
-# add records to provider table
-data = [Provider(ProviderName = "Rahva toit", canteens = [
-    Canteen(
-        Name = "Economics- and social science building canteen", 
-        Location = "Akadeemia tee 3, SOC-building", time_open = 830, time_closed = 1830),
-    Canteen(
-        Name = "Library canteen", Location = "Akadeemia tee 1/Ehitajate tee 7",
-        time_open = 830, time_closed = 1900),
-    Canteen(
-        Name = "U06 building canteen", Location = "U06 building",
-        time_open = 900, time_closed = 1600)]),
+# add records as list to provider table
+all_data = [
+    Provider(ProviderName = "bitStop Kohvik OÜ"),
+    Provider(ProviderName = "Rahva toit", canteens = [
+        Canteen(
+            Name = "Economics- and social science building canteen", 
+            Location = "Akadeemia tee 3, SOC-building", time_open = 830, time_closed = 1830),
+        Canteen(
+            Name = "Library canteen", Location = "Akadeemia tee 1/Ehitajate tee 7",
+            time_open = 830, time_closed = 1900),
+        Canteen(
+            Name = "U06 building canteen", Location = "U06 building",
+            time_open = 900, time_closed = 1600)]),
     Provider(ProviderName = "Baltic Restaurants Estonia AS", canteens = [
         Canteen(
             Name = "Main building Deli cafe", Location = "Ehitajate tee 5, U01 building",
@@ -61,15 +62,21 @@ data = [Provider(ProviderName = "Rahva toit", canteens = [
             Name = "Sports building canteen", Location = "Männiliiva 7, S01 building",
             time_open = 1100, time_closed = 2000)])]
 
+# add it canteen data alone as requirement
+itk_canteen = Canteen(ProviderID = 1, Name = "bitStop KOHVIK", Location = "IT College, Raja 4c", time_open = 930, time_closed = 1600)
+
 Session = sessionmaker(bind=engine)
 session = Session()
 
-session.add_all(data)
-session.commit()
-#try:
-#    session.add(p)
-#    session.commit()
-#except:
-#    session.rollback()
-#finally:
-#    session.close()
+try:
+    # add all the prepared records to sql and commit, first all than it college
+    session.add_all(all_data)
+    session.add(itk_canteen)
+    session.commit()
+    # query canteens open from 16:15 - 18:00
+     
+except:
+    session.rollback()
+    raise
+finally:
+    session.close()
