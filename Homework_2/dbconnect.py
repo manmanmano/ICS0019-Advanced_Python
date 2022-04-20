@@ -66,23 +66,35 @@ def createRecords():
         sql_command = format_str.format(provider_id=data[0], name=data[1], location=data[2], time_open=data[3], time_closed=data[4])
         cursor.execute(sql_command)
 
-
     conn.commit()
     print("Data records inserted successfully!\n")
+
+
+def printRecord(cursor):
+    """
+    Format a record and then print it. Takes query cursor as input.
+    """
+    for row in cursor:
+        print("CANTEEN ID = ", row[0])
+        print("PROVIDER ID = ", row[1])
+        print("NAME = ", row[2])
+        print("LOCATION = ", row[3])
+        print("OPENING TIME = ", row[4])
+        print("CLOSING TIME = ", row[5], '\n')
 
 
 def selectRecords():
     """
     fetch and display records from the CANTEEN table
     """
+    print("Canteens opened 16:15 - 18:00:\n")
     cursor = conn.execute("SELECT * FROM CANTEEN WHERE time_open <= 1615 AND time_closed >= 1800")
-    for row in cursor:
-        print("ID = ", row[0])
-        print("PROVIDER ID = ", row[1])
-        print("NAME = ", row[2])
-        print("LOCATION = ", row[3])
-        print("OPENING TIME = ", row[4])
-        print("CLOSING TIME = ", row[5], '\n')
+    printRecord(cursor)
+
+    print("Canteens served by Rahva Toit:\n")
+    cursor = conn.execute("""SELECT * FROM CANTEEN C INNER JOIN PROVIDER P ON 
+            P.ID=C.ProviderID WHERE P.ProviderName='Rahva toit'""")
+    printRecord(cursor)
 
 
 def closeconn():
@@ -94,8 +106,10 @@ def closeconn():
 
 
 if __name__ == "__main__":
+    print("\n")
     opendb()
     create_tables()
     createRecords()
     selectRecords()
     closeconn()
+    print("\n")
