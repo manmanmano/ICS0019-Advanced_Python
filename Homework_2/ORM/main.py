@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, and_, select
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
@@ -74,7 +74,24 @@ try:
     session.add(itk_canteen)
     session.commit()
     # query canteens open from 16:15 - 18:00
-     
+    stmt = select(Canteen).where(and_(Canteen.time_open <= 1615, Canteen.time_closed >= 1800))     
+    result = session.execute(stmt)
+    # print the results of the first query
+    print("\n\nCanteens opened 16:15 - 18:00:\n")   
+    i = 1
+    for obj in result.scalars():
+        print(f"{i}) {obj.Name} - {obj.Location}")
+        i += 1
+    print("\n")
+    # query canteens served by Rahva toit
+    stmt = select(Canteen).join(Canteen.provider).where(Provider.ProviderName == 'Rahva toit')
+    result = session.execute(stmt)
+    print("\nCanteens served by Rahva Toit:\n")
+    i = 1
+    for obj in result.scalars():
+        print(f"{i}) {obj.Name} - {obj.Location}")
+        i += 1
+    print("\n")
 except:
     session.rollback()
     raise
