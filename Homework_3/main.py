@@ -8,23 +8,24 @@ def createmap_Europe():
     """
     Draw a map of Europe using cartopy
     """
-    proj = ccrs.PlateCarree()
+    proj = ccrs.LambertCylindrical()
     ax = plt.axes(projection=proj)
-    ax.set_extent([-13, 45, 30, 70])
+    ax.set_extent([-20, 45, 25, 70])
     ax.stock_img()
     ax.add_feature(cf.COASTLINE, lw=2)
     ax.add_feature(cf.BORDERS)
     plt.gcf().set_size_inches(20, 10)
 
 
-def draw_flights(flights_data, lat, lon, clr, mrkr):
+def draw_flights(flights_data, lon, lat, clr, mrkr):
     """
     Draw flights with desired color and style. Flights file must contain 
-    columns Latitude and Longitude.
+    columns Latitude and Longitude of departing country.
     """
     # without index gives error because of tuple
     for index, row in flights_data.iterrows():
-        plt.plot([lon, row['Longitude']], [lat, row['Latitude']], color=clr, marker=mrkr, transform=ccrs.Geodetic())
+        plt.plot([lon, row['Longitude']], [lat, row['Latitude']], color=clr, marker=mrkr, transform=ccrs.Geodetic(), linewidth=2, markersize=10)
+        plt.text(row['Longitude'], row['Latitude'], row['IATA'], transform=ccrs.Geodetic(), fontsize=12, fontweight='bold')
 
 
 # Read csv files, first is precovid flights, second postcovid flights, and last is airports
@@ -43,10 +44,11 @@ createmap_Europe()
 tallinn_lat = 59.4162
 tallinn_lon = 24.8004
 
-# Call function in order to draw flight data, precovid will be in yellow, postcovid in blue
-draw_flights(precf_coord, tallinn_lat, tallinn_lon, 'yellow', 'o')
-draw_flights(postcf_coord, tallinn_lat, tallinn_lon, 'blue', 'o')
+# Call function in order to draw flight data, precovid will be in blue, postcovid in yellow
+draw_flights(precf_coord, tallinn_lon, tallinn_lat, 'blue', '*')
+draw_flights(postcf_coord, tallinn_lon, tallinn_lat, 'yellow', '*')
 
 # Save figure as PNG and set title
 plt.title("Pre- and Postcovid direct flights from Tallinn\nMariano D'Angelo\n", fontsize=20)
 plt.savefig("Flights.png")
+plt.show()
