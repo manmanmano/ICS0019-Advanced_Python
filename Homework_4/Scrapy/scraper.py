@@ -33,9 +33,9 @@ class OrdiSetLaptops(scrapy.Spider):
                 PRICE_SELECTOR = 'span::text'
                 IMAGE_SELECTOR = 'img::attr(src)'
                 yield {
-                        'title': chipset.css(TITLE_SELECTOR).extract_first(),
-                        'price': chipset.css(PRICE_SELECTOR).extract_first(),
-                        'image': chipset.css(IMAGE_SELECTOR).extract_first(),
+                        'Title': chipset.css(TITLE_SELECTOR).extract_first(),
+                        'Price': chipset.css(PRICE_SELECTOR).extract_first(),
+                        'Picture href': chipset.css(IMAGE_SELECTOR).extract_first(),
                 }
             # define a selector for the next page link
             NEXT_PAGE_SELECTOR = '.next::attr(href)'
