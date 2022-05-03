@@ -5,18 +5,20 @@ import requests
 start_url = 'https://ordi.eu/sulearvutid'
 
 def parse(start_urls):
-    page = requests.get(start_url)
+    page = requests.get(start_urls)
     soup = BeautifulSoup(page.text, 'html.parser')
 
     # insert products into list
-    selectors = ['item first', 'item', 'item last']
-    chipsets_list = []
-    for selector in selectors:
-        chipsets_list = soup.find_all("li", class_ = selector)
+    chipsets_list = soup.find_all('li', class_ = 'item')
      
     for chip in chipsets_list:
-        data = {'title':'', 'price':'', 'image':'',}
-        data['title'] = chip.a.get_text()
-        data['price'] = chip.span.get_text()
-        data['image'] = chip.img['href']
+        data = {'Title':'', 'Price':'', 'Picture href':'',}
+        data['Title'] = chip.h2.get_text()
+        data['Price'] = chip.span.get_text()
+        data['Picture href'] = chip.img['src']
         print(data)
+
+    # go to the next page
+
+if __name__ == '__main__':
+    parse(start_url)
